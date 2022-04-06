@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'attendance_model.dart';
+import 'attendance_controller.dart';
 
 class attendance extends StatelessWidget {
   void renderDialog(BuildContext context) {
@@ -24,7 +25,7 @@ class attendance extends StatelessWidget {
                       backgroundColor: Color(0xFF5AAEC4),
                       child: Center(
                         child: Text(
-                          '2',
+                          (AttendanceController.to.retAttendanceLength()+1).toString(),
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
@@ -34,21 +35,20 @@ class attendance extends StatelessWidget {
                     ),
                     Expanded(
                       child: TextField(
-                        // textAlign: TextAlign.right,
-                        // controller: TextEditingController(text: doc["coin"].toString()),
-                        // keyboardType: TextInputType.number,
-                        // maxLength: 1,
+                        autofocus: true,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
-                        onChanged: (value) {
+                        onSubmitted: (value) {
                           if (value != "") {
-                            // MainController.to.addCoupon(doc["imagename"], int.parse(value));
+                            AttendanceController.to.addAttendance(value);
+
                           }
                         },
                         decoration: InputDecoration(
                           labelText: '이름을 입력하세요',
+                          labelStyle: TextStyle(color: Colors.grey, fontSize: 15),
                         ),
                       ),
                     ),
@@ -64,16 +64,11 @@ class attendance extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      // final box = await Hive.openBox('attendance');
-                     var box = Hive.box<AttendanceModel>('attendance');
-                      // box.put(0, 'aaaaa');
-                      print(box.length);
-                      // box.delete(0);
-                      print(box.length);
-                      // box.close();
+                      var box = Hive.box('attendance');
+                      box.deleteFromDisk();
                     },
                     child: Text(
-                      '계속',
+                      '전부삭제',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,

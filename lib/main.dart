@@ -4,16 +4,17 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'main_controller.dart';
+import 'attendance_controller.dart';
 import 'test.dart';
 import 'setting.dart';
 
 void main() async{
   await Hive.initFlutter();
   Hive.registerAdapter(AttendanceModelAdapter());
-  await Hive.openBox<AttendanceModel>('attendance');
+  // await Hive.openBox<AttendanceModel>('attendance');
+  await Hive.openBox('attendance');
 
-  Get.put(MainController());
+  Get.put(AttendanceController());
   runApp(const MyApp());
 }
 
@@ -76,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
 
-        body: _pages[MainController.to.tab_index.value],
+        body: _pages[AttendanceController.to.tab_index.value],
         bottomNavigationBar: BottomNavigationBar(
           // 라벨 안보이게
           showSelectedLabels: false,
@@ -87,9 +88,9 @@ class _MyHomePageState extends State<MyHomePage> {
           selectedItemColor: const Color(0xFF5AAEC4),
           backgroundColor: const Color(0xFF2B2D30),
           onTap: (index) {
-            MainController.to.tab_index.value = index;
+            AttendanceController.to.tab_index.value = index;
           },
-          currentIndex: MainController.to.tab_index.value,
+          currentIndex: AttendanceController.to.tab_index.value,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               label: '지급',
@@ -113,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        floatingActionButton: MainController.to.tab_index.value == 0
+        floatingActionButton: AttendanceController.to.tab_index.value == 0
             ? FloatingActionButton(
           backgroundColor: Colors.orange,
           onPressed: () {
