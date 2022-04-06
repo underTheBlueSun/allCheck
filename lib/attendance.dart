@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'attendance_model.dart';
 import 'attendance_controller.dart';
 
-class attendance extends StatelessWidget {
+class Attendance extends StatelessWidget {
+
   void renderDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -43,6 +45,9 @@ class attendance extends StatelessWidget {
                         onSubmitted: (value) {
                           if (value != "") {
                             AttendanceController.to.addAttendance(value);
+                            Navigator.pop(context);
+                            // Get.to(() => Attendance());
+                            // Get.to(() => Attendance(), arguments: 'add');
 
                           }
                         },
@@ -96,8 +101,28 @@ class attendance extends StatelessWidget {
     );
   }
 
+  FloatingActionButton button = FloatingActionButton(
+  backgroundColor: Colors.orange,
+  onPressed: () {
+  // renderDialog(context);
+  },
+  child: Icon(
+  Icons.add,
+  size: 30.0,
+  ),
+  );
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
+
+    if (1==1) {
+      button.onPressed!();
+    }
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -112,6 +137,7 @@ class attendance extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -125,16 +151,17 @@ class attendance extends StatelessWidget {
           itemCount: 10,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
-        onPressed: () {
-          renderDialog(context);
-        },
-        child: Icon(
-          Icons.add,
-          size: 30.0,
-        ),
-      ),
+        floatingActionButton: button,
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Colors.orange,
+      //   onPressed: () {
+      //     renderDialog(context);
+      //   },
+      //   child: Icon(
+      //     Icons.add,
+      //     size: 30.0,
+      //   ),
+      // ),
     );
   }
 }

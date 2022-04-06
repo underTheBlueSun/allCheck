@@ -18,7 +18,7 @@ class Setting extends StatelessWidget {
               primary: Color(0xFFF9DD6F),
             ),
             onPressed: () {
-              Get.to(() => attendance());
+              Get.to(() => Attendance());
             },
             child: Text(
               "출석부 편집",
